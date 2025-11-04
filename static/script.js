@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
   async function sendMessage(text) {
     const cleaned = text.trim();
     if (!cleaned) {
-      addBubble('Jarvis: Please enter a valid question.', 'bot');
+      addBubble('GURUBot: Please enter a valid question.', 'bot');
       return;
     }
 
@@ -108,12 +108,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const isHindi = /[\u0900-\u097F]/.test(res.reply);
 
       setTimeout(() => {
-        addBubble(`Jarvis: ${res.reply}`, 'bot', isHindi ? '🗣️ Spoken in Hindi' : '🗣️ Spoken in English', true);
+        addBubble(`GURUBot: ${res.reply}`, 'bot', isHindi ? '🗣️ Spoken in Hindi' : '🗣️ Spoken in English', true);
         speak(res.reply);
       }, 500);
     } catch (err) {
       removeTyping();
-      addBubble('Jarvis: Sorry, something went wrong. Try again.', 'bot');
+      addBubble('GURUBot: Sorry, something went wrong. Try again.', 'bot');
       console.error("Error sending message:", err);
     }
   }
@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
       mic.classList.remove('mic-active');
       micStatus.textContent = '';
       listeningAnimation.style.display = 'none';
-      addBubble('Jarvis: Voice input failed. Try typing instead.', 'bot');
+      addBubble('GURUBot: Voice input failed. Try typing instead.', 'bot');
     };
 
     mic.addEventListener('click', () => recognition.start());
@@ -222,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (voiceOnly && recognition) {
       listeningAnimation.style.display = 'block';
-      speak("Hello, I’m Jarvis. I’m listening.");
+      speak("Hello, I’m GURUBot. I’m listening.");
     }
   });
 
@@ -236,8 +236,8 @@ document.addEventListener('DOMContentLoaded', () => {
   themeToggle.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
 
   // 👋 Welcome Message
-  addBubble('Jarvis: Hello. I am Jarvis, your assistant for Guru Gobind Singh Public School, Sector 5, Bokaro Steel City, Jharkhand, India.', 'bot', '', true);
-  speak("नमस्ते! मैं Jarvis हूँ, आपका स्कूल सहायक। आप मुझसे कुछ भी पूछ सकते हैं।");
+  addBubble('GURUBot: Hello. I am GURUBot, your assistant for Guru Gobind Singh Public School, Sector 5, Bokaro Steel City, Jharkhand, India.', 'bot', '', true);
+  speak("नमस्ते! मैं GURUBot हूँ, आपका स्कूल सहायक। आप मुझसे कुछ भी पूछ सकते हैं।");
 });
 
 window.addEventListener('load', () => {
