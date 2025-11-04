@@ -1039,3 +1039,11 @@ body.dark .chat-header {
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
+body {
+  background-color: #0d0d1a;
+  background-image: url("jarvis_bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
