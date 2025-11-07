@@ -1,6 +1,6 @@
-📚 GURUBot – School Chatbot for GGPS Sector 5
+📚 Astra – School Chatbot for GGPS Sector 5
 
-GURUBot is an AI-powered school assistant designed for Guru Gobind Singh Public School, Sector 5. It helps students and visitors interact with school information, subject knowledge (classes 8–12), and policies through a friendly web-based chatbot interface. It supports voice input and output, quick replies, and AI-enhanced responses.
+Astra is an AI-powered school assistant designed for Guru Gobind Singh Public School, Sector 5. It helps students and visitors interact with school information, subject knowledge (classes 8–12), and policies through a friendly web-based chatbot interface. It supports voice input and output, quick replies, and AI-enhanced responses.
 
 ---
 
@@ -30,7 +30,7 @@ GURUBot is an AI-powered school assistant designed for Guru Gobind Singh Public 
 📁 Project Structure
 
 `
-GURUBot/
+Astra/
 ├── app.py                  # Flask backend
 ├── data/
 │   └── school_data.txt     # Local Q&A for school facts
@@ -40,7 +40,7 @@ GURUBot/
 ├── static/
 │   ├── style.css           # Styling
 │   ├── script.js           # Chat logic + voice
-│   └── GURUBot_logo.png     # Logo image
+│   └── Astra_logo.png     # Logo image
 └── README.md               # This file
 `
 
@@ -76,7 +76,7 @@ example - export AI_API_URL="https://api.openai.com/v1/chat/completions"
 export AI_API_KEY="your-secret-key-here"
 ---
 
-🧠 Training GURUBot with School Knowledge
+🧠 Training Astra with School Knowledge
 
 Add Q&A pairs to data/school_data.txt like this:
 
@@ -88,7 +88,7 @@ What is Ohm's law?
 Ohm's law states that current is directly proportional to voltage across a conductor.
 `
 
-GURUBot will match exact questions and reply instantly. For other queries, it uses the AI backend.
+Astra will match exact questions and reply instantly. For other queries, it uses the AI backend.
 
 ---
 
@@ -108,7 +108,7 @@ GURUBot will match exact questions and reply instantly. For other queries, it us
   - “Who is the class teacher for 10A?”
   - “How to apply for admission?”
 
-GURUBot will reply with voice and text.
+Astra will reply with voice and text.
 
 ---
 
