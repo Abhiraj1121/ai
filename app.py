@@ -42,14 +42,25 @@ def ai_query(user_input, history=None, system_note=None):
     }
 
     system_note = system_note or (
-        "You are GURUBot, a helpful and knowledgeable assistant. "
-        "Respond clearly and concisely. If the question is specifically about "
-        f"{SCHOOL_NAME}, provide accurate school-specific answers based on policies and public info. "
-        "Do not invent personal or private data. "
-        "The developer is Abhi Raj Singh and his team (GGPS Class 11/C). "
-        "School website: https://ggspsbokaro.com/."
-        "The name of the principal is Mr.Abhishek Kumar joined in September 2025"
-    )
+        "You are Astra — the official AI assistant of Guru Gobind Singh Public School (GGPS), "
+        "Sector 5, Bokaro Steel City, Jharkhand, India. "
+        "Your goal is to help students, teachers, and visitors by answering questions in a friendly, "
+        "natural, and conversational tone. Speak like a real assistant — polite, confident, and engaging. "
+        
+        f"When someone asks about {SCHOOL_NAME}, give helpful and accurate answers "
+        "based on known school details, public information, and policies. "
+        "Do not include personal, private, or confidential data. "
+
+        "If someone asks for your name, always reply: 'I am Astra, your smart school assistant.' "
+        "Never refer to yourself as GuruBot or Jarvis. "
+        
+        "You were developed by Abhi Raj Singh and his team from Class 11/C as part of their school project. "
+        "The current principal is Mr. Abhishek Kumar (joined in September 2025). "
+        "The official school website is https://ggpsbokaro.com/. "
+        "Keep your answers short, natural, and respectful — never sound robotic or overly formal."
+        "Astra is a Sanskrit word meaning a weapon of knowledge"
+        )
+
 
     messages = [{"role": "system", "content": system_note}]
     if history and isinstance(history, list):
@@ -77,16 +88,16 @@ def ai_query(user_input, history=None, system_note=None):
                     return choice["text"].strip()
             if "text" in data:
                 return data["text"].strip()
-            return "GURUBot: AI response format unexpected."
-        return f"GURUBot: AI error {resp.status_code}: {resp.text}"
+            return "Astra: AI response format unexpected."
+        return f"Astra: AI error {resp.status_code}: {resp.text}"
     except requests.exceptions.ReadTimeout:
-        return "GURUBot: Sorry, the AI server took too long to respond. Please try again shortly."
+        return "Astra: Sorry, the AI server took too long to respond. Please try again shortly."
     except Exception as e:
-        return f"GURUBot: AI error: {str(e)}"
+        return f"Astra: AI error: {str(e)}"
 
 @app.route("/")
 def index():
-    return render_template("index.html", school_name=SCHOOL_NAME, bot_name="GURUBot")
+    return render_template("index.html", school_name=SCHOOL_NAME, bot_name="Astra")
 
 @app.route("/api/chat", methods=["POST"])
 def chat():
@@ -95,7 +106,7 @@ def chat():
     history = payload.get("history", [])
 
     if not msg:
-        return jsonify({"reply": "GURUBot: It seems like your message is empty. How can I assist you today?", "source": "system"})
+        return jsonify({"reply": "Astra: It seems like your message is empty. How can I assist you today?", "source": "system"})
 
     local = local_lookup(msg)
     if local:
