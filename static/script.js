@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const chips = document.querySelectorAll('.chip');
   const avatar = document.querySelector('.avatar');
   const listeningAnimation = document.getElementById('listeningAnimation');
-  const wakeMicButton = document.getElementById('wakeMicButton'); // ✅ added
+  const wakeMicButton = document.getElementById('wakeMicButton');
 
   // 🔁 State
   let isMuted = false;
@@ -21,40 +21,72 @@ document.addEventListener('DOMContentLoaded', () => {
   let typingBubble = null;
   let recognition;
 
-  // 🖋 Typing Animation
-  function typeText(text, element, speed = 40, callback = null) {
-    let i = 0;
-    const interval = setInterval(() => {
-      if (i < text.length) {
-        element.innerHTML += text.charAt(i);
-        i++;
-      } else {
-        clearInterval(interval);
-        if (callback) callback();
-      }
-    }, speed);
+  // ✨ Make URLs, emails & phones clickable
+  function linkify(text) {
+    return text
+      .replace(
+        /(https?:\/\/[^\s]+)/g,
+        '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>'
+      )
+      .replace(
+        /(^|[^\/])(www\.[^\s]+)/g,
+        '$1<a href="https://$2" target="_blank" rel="noopener noreferrer">$2</a>'
+      )
+      .replace(
+        /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g,
+        '<a href="mailto:$1">$1</a>'
+      )
+      .replace(
+        /(\+?\d[\d\s\-]{6,}\d)/g,
+        '<a href="tel:$1">$1</a>'
+      );
   }
 
-  // 💬 Chat Bubble
+  // 💬 Chat Bubble (with animated link-safe typing)
   function addBubble(text, who = 'bot', meta = '', animate = false) {
     if (voiceOnly) return;
+
     const b = document.createElement('div');
     b.className = `bubble ${who}`;
     const content = document.createElement('div');
     content.className = 'ai-text';
     b.appendChild(content);
 
+    const processedText = linkify(text);
+
     if (animate && who === 'bot') {
-      typeText(text, content, 40, () => {
-        if (meta) {
-          const metaDiv = document.createElement('div');
-          metaDiv.className = 'meta';
-          metaDiv.innerHTML = meta;
-          b.appendChild(metaDiv);
+      let i = 0;
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = processedText;
+      const fullHTML = tempDiv.innerHTML;
+      const visible = document.createElement('div');
+      content.appendChild(visible);
+
+      const interval = setInterval(() => {
+        if (i < fullHTML.length) {
+          if (fullHTML[i] === '<') {
+            const end = fullHTML.indexOf('>', i);
+            if (end !== -1) {
+              visible.innerHTML += fullHTML.substring(i, end + 1);
+              i = end + 1;
+            } else {
+              visible.innerHTML += fullHTML[i++];
+            }
+          } else {
+            visible.innerHTML += fullHTML[i++];
+          }
+        } else {
+          clearInterval(interval);
+          if (meta) {
+            const metaDiv = document.createElement('div');
+            metaDiv.className = 'meta';
+            metaDiv.innerHTML = meta;
+            b.appendChild(metaDiv);
+          }
         }
-      });
+      }, 15);
     } else {
-      content.innerHTML = text;
+      content.innerHTML = processedText;
       if (meta) {
         const metaDiv = document.createElement('div');
         metaDiv.className = 'meta';
@@ -65,7 +97,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     chat.appendChild(b);
     autoScroll();
-    chat.scrollTop = chat.scrollHeight;
   }
 
   function addTyping() {
@@ -74,13 +105,10 @@ document.addEventListener('DOMContentLoaded', () => {
     typingBubble.className = 'bubble bot typing';
     typingBubble.innerHTML = `
       <div style="display:flex;align-items:center;gap:8px">
-      <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
       </div>`;
     chat.appendChild(typingBubble);
-
-    requestAnimationFrame(() => {
-      chat.scrollTop = chat.scrollHeight;
-    });
+    requestAnimationFrame(() => (chat.scrollTop = chat.scrollHeight));
   }
 
   function removeTyping() {
@@ -100,13 +128,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.speechSynthesis.cancel();
     removeTyping();
-
     addBubble(`You: ${cleaned}`, 'user', new Date().toLocaleTimeString());
     msg.value = '';
     addTyping();
 
     try {
-      const res = await fetch('https://ggpai-1-0.onrender.com/api/chat', {
+      const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: cleaned })
@@ -116,20 +143,19 @@ document.addEventListener('DOMContentLoaded', () => {
       const isHindi = /[\u0900-\u097F]/.test(res.reply);
 
       setTimeout(() => {
-  addBubble(
-    `Swastik: ${res.reply}`,
-    'bot',
-    isHindi ? '🗣️ Spoken in Hindi' : '🗣️ Spoken in English',
-    true
-  );
+        addBubble(
+          `Swastik: ${res.reply}`,
+          'bot',
+          isHindi ? '🗣️ Spoken in Hindi' : '🗣️ Spoken in English',
+          true
+        );
 
-  // 🧹 Clean text before speaking (remove markdown and HTML)
-  const cleanReply = res.reply
-    .replace(/(\*\*|__|[_*`])/g, '')  // remove markdown like **, _, *
-    .replace(/<[^>]*>/g, '');         // remove any HTML tags
+        const cleanReply = res.reply
+          .replace(/(\*\*|__|[_*`])/g, '')
+          .replace(/<[^>]*>/g, '');
 
-  speak(cleanReply);
-}, 500);
+        speak(cleanReply);
+      }, 500);
     } catch (err) {
       removeTyping();
       addBubble('Swastik: Sorry, something went wrong. Try again.', 'bot');
@@ -137,19 +163,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // 🔊 Speak Response
+  // 🔊 Speak
   function speak(text) {
     if (!text || !('speechSynthesis' in window) || isMuted) return;
-
     const utter = new SpeechSynthesisUtterance(text);
     utter.rate = 1.0;
     utter.pitch = 1.2;
 
     const selectedLang = languageToggle?.value || 'auto';
     const isHindi = /[\u0900-\u097F]/.test(text);
-    utter.lang = selectedLang === 'en' ? 'en-GB' :
-                 selectedLang === 'hi' ? 'hi-IN' :
-                 isHindi ? 'hi-IN' : 'en-GB';
+    utter.lang =
+      selectedLang === 'en'
+        ? 'en-GB'
+        : selectedLang === 'hi'
+        ? 'hi-IN'
+        : isHindi
+        ? 'hi-IN'
+        : 'en-GB';
 
     const setVoice = () => {
       const voices = speechSynthesis.getVoices();
@@ -169,17 +199,14 @@ document.addEventListener('DOMContentLoaded', () => {
       utter.onend = () => {
         avatar?.classList.remove('voice-anim');
         listeningAnimation.style.display = 'none';
-        if (voiceOnly && recognition) {
-          wakeMicButton.style.display = 'flex'; // ✅ show wake mic when done speaking
-        }
+        if (voiceOnly && recognition)
+          wakeMicButton.style.display = 'flex';
       };
     };
 
-    if (speechSynthesis.getVoices().length === 0) {
+    if (speechSynthesis.getVoices().length === 0)
       speechSynthesis.onvoiceschanged = setVoice;
-    } else {
-      setVoice();
-    }
+    else setVoice();
   }
 
   // 🎤 Voice Recognition
@@ -193,7 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
       mic.classList.add('mic-active');
       micStatus.textContent = '🎤 Listening...';
       listeningAnimation.style.display = 'block';
-      wakeMicButton.style.display = 'none'; // ✅ hide wake mic when listening
+      wakeMicButton.style.display = 'none';
     };
 
     recognition.onresult = e => {
@@ -206,10 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
       mic.classList.remove('mic-active');
       micStatus.textContent = '';
       listeningAnimation.style.display = 'none';
-
-      if (voiceOnly) {
-        wakeMicButton.style.display = 'flex'; // ✅ show wake mic after timeout
-      }
+      if (voiceOnly) wakeMicButton.style.display = 'flex';
     };
 
     recognition.onerror = () => {
@@ -220,8 +244,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     mic.addEventListener('click', () => recognition.start());
-
-    // ✅ Wake Mic Button click
     wakeMicButton.addEventListener('click', () => {
       if (recognition && voiceOnly) {
         wakeMicButton.style.display = 'none';
@@ -233,11 +255,9 @@ document.addEventListener('DOMContentLoaded', () => {
     mic.title = 'Voice input not supported';
   }
 
-  // 🧠 UI Event Listeners
+  // ⚙️ UI Controls
   send.addEventListener('click', () => sendMessage(msg.value));
-  msg.addEventListener('keydown', e => {
-    if (e.key === 'Enter') sendMessage(msg.value);
-  });
+  msg.addEventListener('keydown', e => e.key === 'Enter' && sendMessage(msg.value));
 
   themeToggle.addEventListener('click', () => {
     document.body.classList.toggle('dark');
@@ -252,7 +272,6 @@ document.addEventListener('DOMContentLoaded', () => {
   voiceOnlyToggle.addEventListener('click', () => {
     voiceOnly = !voiceOnly;
     document.body.classList.toggle('voice-only', voiceOnly);
-
     if (voiceOnly && recognition) {
       listeningAnimation.style.display = 'block';
       speak("Hello, I’m Swastik. I’m listening.");
@@ -261,20 +280,15 @@ document.addEventListener('DOMContentLoaded', () => {
       wakeMicButton.style.display = 'none';
     }
   });
-  // 🎹 Keyboard Shortcut — Spacebar activates Wake Mic
-document.addEventListener('keydown', (event) => {
-  // Check if Spacebar is pressed, and no input box is focused
-  if (event.code === 'Space' && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
-    event.preventDefault(); // prevent page scroll
 
-    if (voiceOnly && recognition && wakeMicButton.style.display === 'flex') {
-      // Trigger the same behavior as clicking the wake mic
-      wakeMicButton.click();
+  // 🎹 Spacebar Wake Mic
+  document.addEventListener('keydown', e => {
+    if (e.code === 'Space' && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+      e.preventDefault();
+      if (voiceOnly && recognition && wakeMicButton.style.display === 'flex')
+        wakeMicButton.click();
     }
-  }
-});
-
-
+  });
 
   chips.forEach(c => c.addEventListener('click', () => {
     const q = c.dataset.q;
@@ -284,15 +298,12 @@ document.addEventListener('keydown', (event) => {
 
   themeToggle.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
 
-  addBubble('Sir/Mam Hello, I am Swastik your AI Chat bot for G.G.P.School Bokaro','bot','',true);
-  speak("नमस्ते! मैं Swastik हूँ, आपका स्कूल सहायक। आप मुझसे कुछ भी पूछ सकते हैं।");
+  addBubble('Sir/Mam Hello, I am Swastik your AI Chat bot for G.G.P.School Bokaro', 'bot', '', true);
 });
 
 function autoScroll() {
   const chat = document.getElementById('chat');
-  requestAnimationFrame(() => {
-    chat.scrollTop = chat.scrollHeight;
-  });
+  requestAnimationFrame(() => (chat.scrollTop = chat.scrollHeight));
 }
 
 window.addEventListener('load', () => {
