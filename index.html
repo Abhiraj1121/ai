@@ -1,212 +1,195 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Swastik – Under Maintenance</title>
-    <link rel="icon" type="image/jpg" sizes="32x32" href="static/Swastik.jpg">
-    <link rel="apple-touch-icon" href="static/Swastik.jpg">
-    <style>
-        /* ==== Reset & Base ==== */
-        *, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #fff;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            overflow: hidden;
-            position: relative;
-            /* Animated colorful gradient background */
-            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-            background-size: 400% 400%;
-            animation: gradientShift 15s ease infinite;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Swastik • Upgrading Intelligence...</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent: #7f5af0;
+      --accent-glow: #a78bfa;
+      --glass: rgba(10, 15, 35, 0.78);
+      --glass-border: rgba(127, 90, 240, 0.25);
+      --text: #e0e7ff;
+      --text-dim: #94a3b8;
+      --bg-gradient: linear-gradient(135deg, #0f172a, #1e1b4b);
+    }
 
-        /* Gradient Animation */
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text);
+      height: 100dvh;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      position: relative;
+    }
 
-        /* ==== Bubbles Background ==== */
-        .bubbles {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 0;
-            overflow: hidden;
-        }
-        .bubble {
-            position: absolute;
-            bottom: -100px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            backdrop-filter: blur(5px);
-            animation: rise linear infinite;
-            box-shadow: inset 0 0 15px rgba(255,255,255,0.2);
-        }
-        @keyframes rise {
-            0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0.7; }
-            100% { transform: translateY(-120vh) translateX(30px) rotate(360deg); opacity: 0; }
-        }
+    /* Same rain video background as the real app (dark mode) */
+    #bgVideo {
+      position: fixed;
+      top: 50%; left: 50%;
+      min-width: 100%; min-height: 100%;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+      z-index: -2;
+      filter: brightness(0.4) blur(1px);
+    }
 
-        /* ==== Container ==== */
-        .container {
-            max-width: 600px;
-            padding: 2rem;
-            animation: fadeIn 1.2s ease-out;
-            position: relative;
-            z-index: 1;
-        }
+    /* Subtle moving gradient overlay for depth */
+    body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(45deg, rgba(127,90,240,0.08), transparent 30%, rgba(6,214,160,0.06));
+      background-size: 300% 300%;
+      animation: slowMove 20s ease infinite;
+      z-index: -1;
+    }
+    @keyframes slowMove { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
 
-        /* ==== Logo ==== */
-        .logo {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 1.5rem;
-            background: url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8A6u2e8y1P2sV0i6bY6jVq0T5nF3qN3Z2G1V6m5t5t8f/2Q==') center/contain no-repeat;
-            animation: pulse 2s infinite;
-        }
+    .container {
+      text-align: center;
+      padding: 3rem 2rem;
+      max-width: 620px;
+      z-index: 10;
+    }
 
-        /* ==== Headings ==== */
-        h1 {
-            font-size: 2.8rem;
-            margin-bottom: .5rem;
-            text-shadow: 0 2px 8px rgba(0,0,0,.4);
-            background: linear-gradient(90deg, #ffd700, #ff6b6b, #4ecdc4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        h2 {
-            font-size: 1.5rem;
-            font-weight: 400;
-            margin-bottom: 1.5rem;
-            opacity: .9;
-        }
+    /* Glassmorphic Card – exactly like the real app */
+    .card {
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 20px;
+      border: 1px solid var(--glass-border);
+      padding: 3rem 2.5rem;
+      box-shadow: 
+        0 8px 32px rgba(0,0,0,0.6),
+        0 0 60px rgba(127,90,240,0.25);
+      animation: cardPulse 4s ease-in-out infinite;
+    }
+    @keyframes cardPulse {
+      0%,100% { box-shadow: 0 8px 32px rgba(0,0,0,0.6), 0 0 60px rgba(127,90,240,0.25); }
+      50% { box-shadow: 0 12px 48px rgba(0,0,0,0.7), 0 0 90px rgba(127,90,240,0.45); }
+    }
 
-        /* ==== Message ==== */
-        p {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
-            opacity: .9;
-            text-shadow: 0 1px 3px rgba(0,0,0,.3);
-        }
+    /* Logo with glow */
+    .logo {
+      width: 110px;
+      height: 110px;
+      border-radius: 20px;
+      object-fit: cover;
+      margin: 0 auto 1.8rem;
+      box-shadow: 0 0 40px rgba(127,90,240,0.6);
+      animation: logoFloat 5s ease-in-out infinite;
+    }
+    @keyframes logoFloat {
+      0%,100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-16px) rotate(3deg); }
+    }
 
-        /* ==== Progress Bar (now colorful) ==== */
-        .progress {
-            height: 10px;
-            background: rgba(255,255,255,.2);
-            border-radius: 5px;
-            overflow: hidden;
-            margin: 2rem 0;
-            box-shadow: 0 0 10px rgba(255,255,255,.3);
-        }
-        .progress-fill {
-            width: 0;
-            height: 100%;
-            background: linear-gradient(90deg, #ffd700, #ff6b6b, #4ecdc4);
-            animation: loading 3s infinite ease-in-out;
-        }
+    h1 {
+      font-size: 3.4rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      background: linear-gradient(90deg, #c4b5fd, #e0e7ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    h2 {
+      font-size: 1.2rem;
+      font-weight: 300;
+      color: var(--text-dim);
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
 
-        /* ==== Footer ==== */
-        footer {
-            margin-top: 3rem;
-            font-size: .9rem;
-            opacity: .8;
-        }
+    p {
+      font-size: 1.2rem;
+      line-height: 1.7;
+      color: var(--text-dim);
+      margin: 1.8rem 0;
+    }
 
-        /* ==== Animations ==== */
-        @keyframes fadeIn {
-            from { opacity:0; transform:translateY(20px); }
-            to   { opacity:1; transform:translateY(0); }
-        }
-        @keyframes pulse {
-            0%,100% { transform:scale(1); }
-            50% { transform:scale(1.15); }
-        }
-        @keyframes loading {
-            0%   { width:0; }
-            100% { width:100%; }
-        }
+    /* Glowing RGB Progress Bar – matches your send button */
+    .progress {
+      height: 7px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 2.5rem 0;
+      position: relative;
+    }
+    .progress::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, #ff004d, #ff8c00, #ffee00, #40e0d0, #7f5af0, #ff004d);
+      background-size: 600%;
+      animation: rgbFlow 8s linear infinite;
+      border-radius: 4px;
+    }
+    @keyframes rgbFlow { 0%{background-position:0% 50%} 100%{background-position:100% 50%} }
 
-        /* ==== Responsive ==== */
-        @media (max-width: 480px) {
-            h1 { font-size: 2.2rem; }
-            h2 { font-size: 1.3rem; }
-        }
-    </style>
+    .status {
+      font-size: 1.05rem;
+      color: var(--accent-glow);
+      font-weight: 500;
+      letter-spacing: 1px;
+    }
+
+    footer {
+      margin-top: 4rem;
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      opacity: 0.8;
+    }
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    footer a:hover { text-decoration: underline; }
+  </style>
 </head>
 <body>
-    <!-- Floating Bubbles -->
-    <div class="bubbles" id="bubbles"></div>
 
-    <div class="container">
-        <div class="logo" aria-hidden="true"></div>
+  <!-- Same beautiful rain video background as your dark mode app -->
+  <video autoplay muted loop playsinline id="bgVideo">
+    <source src="https://motionbgs.com/media/7362/hydrangeas-rain.960x540.mp4" type="video/mp4">
+  </video>
 
-        <h1>Swastik is Upgrading!</h1>
-        <h2>AI Chatbot – School Project</h2>
+  <div class="container">
+    <div class="card">
+      <img src="static/Swastik.jpg" alt="Swastik" class="logo" />
 
-        <p>
-            We’re busy polishing the gears, teaching Swastik a few new tricks, 
-            and making everything faster and smarter.
-        </p>
+      <h1>Swastik</h1>
+      <h2>Intelligence Upgrade in Progress</h2>
 
-        <div class="progress">
-            <div class="progress-fill"></div>
-        </div>
+      <p>
+        We're making Swastik even smarter — training on new school data,<br>
+        improving voice recognition, and polishing every detail.
+      </p>
 
-        <p>
-            Hang tight! We’ll be back in a flash. <br>
-            Grab a snack or stretch your legs!
-        </p>
+      <div class="progress"></div>
 
-        <footer>
-            © 2025 <strong>Swastik</strong> – A school project by <em>Abhi & Team</em>
-        </footer>
+      <div class="status">Neural Enhancement • Running smoothly</div>
+
+      <p style="margin-top: 2.5rem;">
+        Back in a few minutes.<br>
+        Thank you for your patience — greatness takes time ♡
+      </p>
+
+      <footer>
+        © 2025 <strong>Swastik</strong> • Guru Gobind Singh Public School, Sector 5<br>
+        Made with passion by Abhi Raj Singh and Team • <a href="https://github.com/Abhiraj1121" target="_blank">@Abhiraj1121</a>
+      </footer>
     </div>
+  </div>
 
-    <script>
-        // Generate colorful bubbles
-        const bubblesContainer = document.getElementById('bubbles');
-        const bubbleColors = ['#ff6b6b', '#4ecdc4', '#ffd700', '#a8e6cf', '#95e1d3', '#fce38a'];
-
-        function createBubble() {
-            const bubble = document.createElement('div');
-            bubble.classList.add('bubble');
-
-            const size = Math.random() * 80 + 30; // 30–110px
-            const duration = Math.random() * 20 + 10; // 10–30s
-            const delay = Math.random() * 5;
-            const left = Math.random() * 100;
-            const color = bubbleColors[Math.floor(Math.random() * bubbleColors.length)];
-
-            bubble.style.width = `${size}px`;
-            bubble.style.height = `${size}px`;
-            bubble.style.left = `${left}%`;
-            bubble.style.background = color;
-            bubble.style.opacity = Math.random() * 0.4 + 0.3;
-            bubble.style.animation = `rise ${duration}s linear ${delay}s infinite`;
-
-            bubblesContainer.appendChild(bubble);
-
-            // Remove after animation to save memory
-            setTimeout(() => {
-                bubble.remove();
-            }, (duration + delay) * 1000);
-        }
-
-        // Create bubbles continuously
-        setInterval(createBubble, 800);
-
-        // Initial burst
-        for (let i = 0; i < 12; i++) {
-            setTimeout(createBubble, i * 300);
-        }
-    </script>
 </body>
 </html>
