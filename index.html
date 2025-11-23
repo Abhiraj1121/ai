@@ -6,67 +6,299 @@
     <title>Swastik Closed</title>
     <link rel="icon" type="image/png" sizes="32x32" href="static/Swastik.jpg">
     <link rel="apple-touch-icon" href="static/Swastik.jpg">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
             padding: 0;
-            font-family: "Poppins", sans-serif;
-            background: linear-gradient(135deg, #6a5acd, #7b68ee, #4b79a1, #283e51);
+            font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 25%, #fecfef 50%, #a8edea 75%, #fed6e3 100%);
             background-size: 400% 400%;
-            animation: gradient 12s ease infinite;
+            animation: gradientShift 20s ease infinite;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             text-align: center;
-            color: #fff;
+            color: #333;
+            line-height: 1.6;
+            position: relative;
+            overflow: hidden;
         }
 
-        @keyframes gradient {
+        @keyframes gradientShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
+        /* Bubbles Background */
+        .bubbles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -100px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float 10s infinite linear;
+        }
+
+        .bubble:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            left: 10%;
+            animation-delay: 0s;
+            animation-duration: 12s;
+        }
+
+        .bubble:nth-child(2) {
+            width: 50px;
+            height: 50px;
+            left: 20%;
+            animation-delay: 2s;
+            animation-duration: 15s;
+        }
+
+        .bubble:nth-child(3) {
+            width: 120px;
+            height: 120px;
+            left: 70%;
+            animation-delay: 4s;
+            animation-duration: 18s;
+        }
+
+        .bubble:nth-child(4) {
+            width: 60px;
+            height: 60px;
+            left: 80%;
+            animation-delay: 6s;
+            animation-duration: 10s;
+        }
+
+        .bubble:nth-child(5) {
+            width: 100px;
+            height: 100px;
+            left: 40%;
+            animation-delay: 8s;
+            animation-duration: 14s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
         .container {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 600px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 24px;
+            padding: 48px 40px;
+            max-width: 520px;
+            width: 90%;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.1),
+                0 0 0 1px rgba(255, 255, 255, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+            border-radius: 24px 24px 0 0;
+        }
+
+        .container::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            border-radius: 0 0 24px 24px;
+        }
+
+        .container:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.15),
+                0 0 0 1px rgba(255, 255, 255, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(255, 255, 255, 0.5);
+            display: block;
+            animation: breathe 4s ease-in-out infinite;
+            box-shadow: 
+                0 4px 8px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6),
+                0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes breathe {
+            0%, 100% { 
+                transform: scale(1); 
+                opacity: 1;
+                box-shadow: 
+                    0 4px 8px rgba(0, 0, 0, 0.1),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+                    0 0 20px rgba(255, 255, 255, 0.2);
+            }
+            50% { 
+                transform: scale(1.03); 
+                opacity: 0.95;
+                box-shadow: 
+                    0 6px 12px rgba(0, 0, 0, 0.15),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+                    0 0 30px rgba(255, 255, 255, 0.3);
+            }
         }
 
         h1 {
-            font-size: 2.6rem;
-            margin-bottom: 10px;
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin: 0 0 16px 0;
+            letter-spacing: -0.02em;
+            line-height: 1.3;
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4, #45b7d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h1 .highlight {
+            background: linear-gradient(135deg, #feca57, #ff9ff3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             font-weight: 700;
         }
 
-        p {
-            font-size: 1.2rem;
-            margin-top: 10px;
-            line-height: 1.6;
+        .subtitle {
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: rgba(51, 51, 51, 0.9);
+            margin: 0 0 32px 0;
+            font-style: italic;
         }
 
-        .emoji {
-            font-size: 2rem;
+        p {
+            font-size: 1rem;
+            margin: 0 0 20px 0;
+            color: rgba(51, 51, 51, 0.95);
+            font-weight: 300;
+        }
+
+        .closing {
+            font-size: 1rem;
+            margin: 28px 0 0 0;
+            color: rgba(51, 51, 51, 0.8);
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .closing .emoji {
+            font-size: 1.2rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 40px 32px;
+                margin: 20px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .logo {
+                width: 80px;
+                height: 80px;
+            }
+        }
+
+        /* Accessibility improvements */
+        @media (prefers-reduced-motion: reduce) {
+            body, .logo, .closing .emoji, .bubble {
+                animation: none;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="bubbles">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+    </div>
     <div class="container">
-        <img src="static/Swastik.jpg" alt="Swastik Logo" style="width:120px; margin-bottom:20px;" />
-        <h1>Thank You! ✨<br>Swastik is Now Closed</h1>
+        <img src="static/Swastik.jpg" alt="Swastik Logo" class="logo" />
+        <h1>Thank You!<span class="highlight"><br>Swastik is Now Closed</span></h1>
+        <p class="subtitle">A heartfelt appreciation to all who made this journey memorable.</p>
         <p>
             It was a wonderful day! We sincerely thank all the parents, teachers, and students
             who visited and supported our project. Your appreciation made it truly special.
         </p>
         <p>
-            Swastik has now gone into a deep sleep 😴 but who knows... maybe he'll wake up again
-            on the official GGPS website soon! 💫
+            Swastik has now entered a peaceful rest, but who knows... perhaps he'll awaken again
+            on the official GGPS website soon.
         </p>
-        <p class="emoji">💙💛 Thank you for your love & support! 💛💙</p>
+        <p class="closing">
+            💙💛 Thank you for your love & support! 💛💙
+        </p>
+        <p>© 2025 Swastik • All Rights Reserved</p>
     </div>
 </body>
 </html>
