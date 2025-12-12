@@ -1,6 +1,6 @@
-📚 Swastik – School Chatbot for GGPS Sector 5
+📚 Swastik – Ai Chat Bot
 
-Swastik is an AI-powered school assistant designed for Guru Gobind Singh Public School, Sector 5. It helps students and visitors interact with school information, subject knowledge (classes 8–12), and policies through a friendly web-based chatbot interface. It supports voice input and output, quick replies, and AI-enhanced responses.
+Swastik is an AI-powered assistant. It helps userd interact with some quaries, and policies through a friendly web-based chatbot interface. It supports voice input and output, quick replies, and AI-enhanced responses.
 
 legal Documents : https://abhiraj1121.github.io/ai-tc/
 ---
@@ -9,7 +9,6 @@ legal Documents : https://abhiraj1121.github.io/ai-tc/
 
 - 🧠 AI-powered responses using a cloud-based text generation API
 - 📚 Subject-aware Q&A for Physics, Chemistry, Biology, Math, English, CS/IP/AI/PE
-- 🏫 School-specific facts: timings, admission, attendance, teachers
 - 🎤 Voice input (Web Speech API) and 🔊 voice output (Text-to-Speech)
 - 💬 Responsive chat UI with quick-reply chips and typing indicators
 - 📝 Easy-to-edit local Q&A file for teachers to update answers
@@ -94,20 +93,10 @@ Swastik will match exact questions and reply instantly. For other queries, it us
 ---
 
 🎨 Customization
-
-- Change school name in app.py and index.html
-- Add teacher photos or subject icons in static/
 - Modify quick-reply chips in index.html
 - Add admin panel for editing Q&A (optional)
 
 ---
-
-🧪 Testing
-
-- Try typing or speaking:
-  - “What is photosynthesis?”
-  - “Who is the class teacher for 10A?”
-  - “How to apply for admission?”
 
 Swastik will reply with voice and text.
 
@@ -124,7 +113,6 @@ Swastik will reply with voice and text.
 👩‍🏫 Contributors
 
 - Abhi – Developer & Designer
-- Copilot - Thinker & Director
-- GGPS Sector 5 – School context and data
+- Binod – Local Designer
 
 ---
