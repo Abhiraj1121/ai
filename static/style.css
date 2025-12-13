@@ -1283,3 +1283,27 @@ body.dark .dark-video {
 body.dark .light-video {
   display: none;
 }
+/* Center container */
+.clear-section {
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+}
+
+/* Red Clear Chat Button */
+.clear-btn {
+  background: rgba(255, 0, 0, 0.18);
+  border: 1px solid rgba(255, 0, 0, 0.4);
+  color: #ff2b2b;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+/* Hover Glow */
+.clear-btn:hover {
+  background: rgba(255, 0, 0, 0.32);
+  box-shadow: 0 0 12px rgba(255, 0, 0, 0.6);
+}
