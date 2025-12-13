@@ -90,6 +90,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  clearChat.addEventListener('click', () => {
+    chat.innerHTML = "";
+    addBubble("Chat cleared successfully.", "bot", "", true);
+    if (!isMuted) speak("Chat cleared successfully.");
+  });
+
   // 📤 Send Message
   async function sendMessage(text) {
     const cleaned = text.trim();
@@ -106,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
     addTyping();
 
     try {
-      const res = await fetch('https://ggpai-1-0.onrender.com/api/chat', {
+      const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: cleaned })
@@ -188,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     recognition.onstart = () => {
       mic.classList.add('mic-active');
-      micStatus.textContent = '🎤 Listening...';
+      micStatus.textContent = ' Listening...';
       listeningAnimation.style.display = 'block';
       wakeMicButton.style.display = 'none'; // ✅ hide wake mic when listening
     };
@@ -313,7 +319,7 @@ document.addEventListener('keydown', (event) => {
 
   themeToggle.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
 
-  addBubble('Sir/Mam Hello, I am Swastik your AI Chat bot for G.G.P.School Bokaro','bot','',true);
+  addBubble('Sir/Mam Hello, I am Swastik your AI Chat bot. ','bot','',true);
 });
 
 function autoScroll() {
