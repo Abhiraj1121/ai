@@ -17,6 +17,11 @@
   box-sizing: border-box;
   transition: background 0.3s ease, color 0.3s ease;
 }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
 html, body {
   height: 100%;
@@ -774,16 +779,6 @@ body.dark .chat-header {
 }
 
 /* A dark background is recommended to see the glow effects */
-body {
-  background-color: #1a1a2e; /* Dark background */
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-  margin: 0;
-  padding: 0;
-}
-
 .listening-animation {
   position: absolute;
   top: 50%;
@@ -1094,6 +1089,7 @@ body {
   scrollbar-color: linear-gradient(135deg, #7f5af0, #5f3dc4) rgba(255, 255, 255, 0.1);
 }
 
+/* DELETE THIS OLD BLOCK */
 .wake-mic {
   position: fixed;
   bottom: 9%;
@@ -1127,6 +1123,7 @@ body {
   animation: pulseGlow 2.5s infinite;
   z-index: -1;
 }
+/* END OF DELETED BLOCK */
 
 @keyframes pulseGlow {
   0%, 100% { transform: scale(1); opacity: 0.6; }
@@ -1283,6 +1280,28 @@ body.dark .dark-video {
 body.dark .light-video {
   display: none;
 }
+
+/* 🌐 Web Search Toggle Glow */
+#webToggle.active {
+  background: rgba(0, 200, 255, 0.25);
+  box-shadow: 0 0 18px rgba(0, 200, 255, 0.8);
+}
+
+#webToggle.active #webIcon {
+  stroke: #00eaff;
+  filter: drop-shadow(0 0 6px #00eaff);
+}
+/* 🔇 Mute Toggle Glow (Red) */
+#muteToggle.active {
+  background: rgba(255, 50, 50, 0.25);
+  box-shadow: 0 0 18px rgba(255, 50, 50, 0.75);
+}
+
+#muteToggle.active #muteIcon {
+  stroke: #ff3b3b;
+  filter: drop-shadow(0 0 6px #ff3b3b);
+}
+/* 🗑️ Clear Chat Button Style */
 /* Center container */
 .clear-section {
   margin-top: 12px;
@@ -1306,4 +1325,303 @@ body.dark .light-video {
 .clear-btn:hover {
   background: rgba(255, 0, 0, 0.32);
   box-shadow: 0 0 12px rgba(255, 0, 0, 0.6);
+}
+
+.clear-section {
+  margin-top: 10px;
+}
+
+.history-panel li {
+  padding: 10px 12px;
+  margin-bottom: 6px;
+  background: var(--bg-light);
+  border-radius: 6px;
+  font-size: 14px;
+  color: var(--text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+}
+
+.history-panel li:hover {
+  background: var(--accent-light);
+  transform: translateX(4px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.history-panel li::before {
+  content: "🗨️";
+  font-size: 14px;
+  opacity: 0.7;
+  transition: transform 0.2s ease;
+}
+
+.history-panel li:hover::before {
+  transform: scale(1.1);
+}
+.clear-section {
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+}
+
+/* Red Clear Chat Button */
+.clear-btn {
+  background: rgba(255, 0, 0, 0.18);
+  border: 1px solid rgba(255, 0, 0, 0.4);
+  color: #ff2b2b;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+/* Hover Glow */
+.clear-btn:hover {
+  background: rgba(255, 0, 0, 0.32);
+  box-shadow: 0 0 12px rgba(255, 0, 0, 0.6);
+}
+.ai-text strong {
+  font-weight: 700;
+}
+
+.ai-text em {
+  font-style: italic;
+}
+
+.ai-text a {
+  color: #7f5af0;
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+.ai-text code {
+  background: rgba(0,0,0,0.15);
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-family: monospace;
+}
+
+.ai-text pre {
+  background: rgba(0,0,0,0.25);
+  padding: 12px;
+  border-radius: 10px;
+  overflow-x: auto;
+}
+@keyframes glowing {
+  0% { opacity: .2; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(-5px); }
+  100% { opacity: .2; transform: translateY(0); }
+}
+/* ========================= */
+/* 🧠 MARKDOWN STYLES INSIDE CHAT */
+/* ========================= */
+
+/* Inline code */
+.bubble code {
+  background-color: #f4f4f4;
+  color: #d6336c;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Fira Code', monospace;
+  font-size: 13px;
+}
+
+/* Code blocks */
+.bubble pre code {
+  display: block;
+  background-color: #1e1e1e;
+  color: #dcdcdc;
+  padding: 12px;
+  border-radius: 8px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  line-height: 1.5;
+}
+
+/* Remove double background from <pre> */
+.bubble pre {
+  background: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+/* Lists */
+.bubble ul,
+.bubble ol {
+  padding-left: 20px;
+  margin: 8px 0;
+}
+
+.bubble li {
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.bubble ul li::marker {
+  color: var(--accent);
+}
+
+/* Tables */
+.bubble table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+.bubble th,
+.bubble td {
+  border: 1px solid rgba(0,0,0,0.15);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.bubble th {
+  background-color: #f0f0f0;
+  font-weight: 700;
+}
+
+.bubble tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+/* ========================= */
+/* 🌙 DARK MODE FIXES */
+/* ========================= */
+
+body.dark .bubble code {
+  background-color: rgba(255,255,255,0.08);
+  color: #ff7aa2;
+}
+
+body.dark .bubble pre code {
+  background-color: #0f172a;
+  color: #e5e7eb;
+}
+
+body.dark .bubble th {
+  background-color: rgba(255,255,255,0.08);
+}
+
+body.dark .bubble td {
+  border-color: rgba(255,255,255,0.15);
+}
+
+body.dark .bubble tr:nth-child(even) {
+  background-color: rgba(255,255,255,0.04);
+}
+/* ========================= */
+/* 🧠 CRITICAL INPUT FIX */
+/* ========================= */
+
+.composer,
+.composer-container,
+#msg {
+  position: relative;
+  z-index: 1000;
+  pointer-events: auto;
+}
+
+#msg {
+  user-select: text;
+}
+/* Prevent visual effects from blocking clicks */
+.listening-animation,
+.glow-ring,
+.ripple,
+#bgVideo,
+.bg-video {
+  pointer-events: none;
+}
+.chat-area {
+  position: relative;
+  z-index: 20;
+}
+#historyList {
+  max-height: 200px; /* or whatever height fits your layout */
+  overflow-y: auto;
+  padding-right: 8px; /* optional: avoids scrollbar overlap */
+  scrollbar-width: thin; /* Firefox */
+}
+
+#historyList::-webkit-scrollbar {
+  width: 6px;
+}
+
+#historyList::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+}
+.bubble p {
+  margin: 0.4em 0;
+  line-height: 1.5;
+}
+.bubble ul,
+.bubble ol {
+  margin: 0.4em 0;
+  padding-left: 18px;
+}
+
+.bubble li {
+  margin: 0.25em 0;
+}
+.bubble pre {
+  margin: 0.6em 0;
+}
+
+.bubble pre code {
+  padding: 10px;
+  font-size: 13px;
+  line-height: 1.45;
+}
+.bubble {
+  max-width: 70%;
+}
+.bubble {
+  padding: 12px 14px;
+}
+.bubble p:first-child {
+  margin-top: 0;
+}
+
+.bubble p:last-child {
+  margin-bottom: 0;
+}
+.bubble {
+  max-width: 70%;
+  width: fit-content;
+}
+.bubble.user {
+  margin-left: auto;
+  text-align: left;
+}
+
+.bubble.bot {
+  margin-right: auto;
+}
+.bubble {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+.bubble.user {
+  flex: none;
+}
+.bubble.user {
+  max-width: 65%;
+}
+.bubble {
+  max-width: 70%;
+  width: fit-content;
+  word-wrap: break-word;
+}
+
+.bubble.user {
+  margin-left: auto;
+  flex: none;
 }
