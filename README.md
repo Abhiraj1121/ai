@@ -1,118 +1,174 @@
-📚 Swastik – Ai Chat Bot
+# 🤖 Swastik – Intelligent AI Chat Assistant
 
-Swastik is an AI-powered assistant. It helps userd interact with some quaries, and policies through a friendly web-based chatbot interface. It supports voice input and output, quick replies, and AI-enhanced responses.
+**Swastik** is a modern, AI-powered web chatbot designed to provide natural conversations through text and voice. It features a sleek chat UI, optional Wikipedia-powered web search, markdown-rendered responses, and hands-free voice interaction — all running in a lightweight Flask-based web app.
+
+Swastik is built to be fast, flexible, and easy to extend, making it ideal for personal assistants, knowledge bots, demos, or AI experiments.
+
 
 legal Documents : https://abhiraj1121.github.io/ai-tc/
----
-
-🚀 Features
-
-- 🧠 AI-powered responses using a cloud-based text generation API
-- 📚 Subject-aware Q&A for Physics, Chemistry, Biology, Math, English, CS/IP/AI/PE
-- 🎤 Voice input (Web Speech API) and 🔊 voice output (Text-to-Speech)
-- 💬 Responsive chat UI with quick-reply chips and typing indicators
-- 📝 Easy-to-edit local Q&A file for teachers to update answers
 
 ---
 
-🛠️ Tech Stack
+## 🚀 Features
 
-- Python 3.8+
-- Flask (backend)
-- HTML/CSS/JavaScript (frontend)
-- ChatterBot (optional fallback)
-- AI API (OpenAI or compatible)
-- Web Speech API (browser voice input)
-- SpeechSynthesis (browser voice output)
+### 🧠 AI Intelligence
+
+* AI-powered conversational responses using a cloud-based text generation API
+* Smart fallback logic for reliable replies
+* Clean, friendly, and concise responses by default
+
+### 🌐 Web / Wikipedia Search (Optional)
+
+* Toggle-based web search (OFF by default)
+* Uses **Wikipedia** for factual and up-to-date information
+* Automatically falls back to AI if no wiki result is found
+* Safe, fast, and non-intrusive (no crashes)
+
+### 📝 Markdown Support
+
+* AI and Wiki responses support **Markdown formatting**
+* Proper rendering of:
+
+  * Headings
+  * Bullet points
+  * Bold / italic text
+  * Code blocks
+* Clean reading experience for long answers
+
+### 🎤 Voice Interaction
+
+* 🎙️ Voice input using Web Speech API
+* 🔊 Voice output using Speech Synthesis
+* Automatic language detection (English / Hindi)
+* Voice-only mode with wake mic support
+
+### 💬 Chat Experience
+
+* Smooth typing animation
+* Chat bubbles with timestamps
+* Quick-reply action buttons
+* Auto-scroll behavior
+* Responsive UI for desktop and mobile
+
+### 🧹 Chat Management
+
+* **Clear Chat / History button**
+* Instantly wipes conversation from UI
+* Optional voice confirmation after clearing
+
+### 🎨 UI & Controls
+
+* Dark / Light theme toggle
+* Mute / Unmute voice output
+* Web search toggle with glowing animation
+* Clean, modern, animated interface
 
 ---
 
-📁 Project Structure
+## 🛠️ Tech Stack
 
-`
+### Backend
+
+* **Python 3.8+**
+* **Flask**
+* **Flask-CORS**
+* **Requests**
+* **python-dotenv**
+
+### Frontend
+
+* **HTML5**
+* **CSS3**
+* **JavaScript (Vanilla)**
+* Web Speech API (Voice Input)
+* SpeechSynthesis API (Voice Output)
+
+### AI
+
+* Any OpenAI-compatible or OpenRouter-compatible AI API
+* Wikipedia REST API for factual lookup
+
+---
+
+## 📁 Project Structure
+
+```
 Swastik/
-├── app.py                  # Flask backend
-├── data/
-│   └── school_data.txt     # Local Q&A for school facts
-├── models/                 # Optional model storage
+├── app.py                  # Flask backend (AI + Wiki logic)
 ├── templates/
 │   └── index.html          # Chat UI
 ├── static/
-│   ├── style.css           # Styling
-│   ├── script.js           # Chat logic + voice
-│   └── Swastik.png     # Logo image
-└── README.md               # This file
-`
+│   ├── style.css           # Styling & animations
+│   ├── script.js           # Chat logic, voice, toggles
+│   └── Swastik.png         # Logo
+├── .env                    # API keys & config
+└── README.md               # Documentation
+```
 
 ---
 
-⚙️ Setup Instructions
+## ⚙️ Setup Instructions
 
-1. Install dependencies
-   `bash
-   pip install flask requests flask_cors
-   `
+### 1️⃣ Install Dependencies
 
-2. Set environment variables
-   `bash
-   export AIAPIURL="https://your-ai-provider.com/api"
-   export AIAPIKEY="your-api-key"
-   `
-
-3. Run the app
-   `bash
-   python app.py
-   `
-
-4. Open in browser
-   `
-   http://127.0.0.1:5000
-   `
-5. In cmd run this code
-   pip install python-dotenv
-
-6. In .env file chenge the ai api key and ai api url with your ai api key and url
-example - export AI_API_URL="https://api.openai.com/v1/chat/completions"
-export AI_API_KEY="your-secret-key-here"
----
-
-🧠 Training Swastik with School Knowledge
-
-Add Q&A pairs to data/school_data.txt like this:
-
-`
-What are the school hours?
-School hours are 08:30 to 14:00 Monday to Friday.
-
-What is Ohm's law?
-Ohm's law states that current is directly proportional to voltage across a conductor.
-`
-
-Swastik will match exact questions and reply instantly. For other queries, it uses the AI backend.
+```bash
+pip install flask requests flask-cors python-dotenv
+```
 
 ---
 
-🎨 Customization
-- Modify quick-reply chips in index.html
-- Add admin panel for editing Q&A (optional)
+### 2️⃣ Environment Variables
+
+Create a `.env` file:
+
+```bash
+AI_API_URL="https://api.openai.com/v1/chat/completions"
+AI_API_KEY="your-api-key-here"
+```
+
+(Works with OpenAI, OpenRouter, or any compatible provider)
 
 ---
 
-Swastik will reply with voice and text.
+### 3️⃣ Run the App
+
+```bash
+python app.py
+```
 
 ---
 
-📌 Notes
+### 4️⃣ Open in Browser
 
-- Works best in Chrome (for voice input/output)
-- AI backend must support prompt-based text generation
-- Local Q&A overrides AI for school-specific facts
+```
+http://127.0.0.1:5000
+```
+
+---
+
+## 🧪 Usage Examples
+
+Try typing or speaking:
+
+* “What is Artificial Intelligence?”
+* “DC of Patna” (with 🌐 Web Search ON)
+* “Explain black holes in simple words”
+* “Write a Python function for Fibonacci”
+
+Toggle 🌐 Web Search ON to fetch verified information from Wikipedia.
 
 ---
 
-👩‍🏫 Contributors
+## 📌 Notes
 
-- Abhi – Developer & Designer
-- Binod – Local Designer
+* Best experience on **Google Chrome** (voice features)
+* Web search works **only when enabled**
+* AI responses are used when Wiki is disabled or unavailable
+* No conversation history is stored on the server
 
 ---
+
+## 👤 Author
+
+**Abhi**
+Developer & Designer
