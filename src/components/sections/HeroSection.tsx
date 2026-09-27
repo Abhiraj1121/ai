@@ -109,7 +109,7 @@ export const HeroSection: React.FC = () => {
           className="flex flex-wrap items-center justify-center gap-4 mt-8"
         >
           <MagneticButton
-            href="https://abhiraj1121.github.io/agenticai/"
+            href="https://abhiraj1121.github.io/eka/"
             variant="primary"
             size="lg"
           >
