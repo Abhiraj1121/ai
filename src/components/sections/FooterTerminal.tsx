@@ -37,7 +37,7 @@ export const FooterTerminal: React.FC = () => {
 
             <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
               <MagneticButton
-                href="https://abhiraj1121.github.io/agenticai/"
+                href="https://abhiraj1121.github.io/eka/"
                 variant="primary"
                 size="lg"
               >
@@ -85,7 +85,7 @@ export const FooterTerminal: React.FC = () => {
               <span>GitHub</span>
             </a>
             <a
-              href="https://abhiraj1121.github.io/agenticai/"
+              href="https://abhiraj1121.github.io/eka/"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-ink transition-colors flex items-center space-x-1"
