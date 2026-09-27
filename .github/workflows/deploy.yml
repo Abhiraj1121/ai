@@ -34,7 +34,7 @@ jobs:
 
       - name: Build Next.js Static Export
         env:
-          NEXT_PUBLIC_REPO_NAME: "cognix"
+          NEXT_PUBLIC_REPO_NAME: "ai"
         run: npm run build
 
       - name: Upload GitHub Pages artifact
