@@ -155,7 +155,7 @@ export const GlobalNavbar: React.FC = () => {
                 View GitHub Repository →
               </a>
               <MagneticButton
-                href="https://abhiraj1121.github.io/agenticai/"
+                href="https://abhiraj1121.github.io/eka/"
                 variant="primary"
                 size="md"
                 className="w-full"
